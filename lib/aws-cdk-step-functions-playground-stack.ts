@@ -4,6 +4,7 @@ import * as sfn from "@aws-cdk/aws-stepfunctions";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as tasks from "@aws-cdk/aws-stepfunctions-tasks";
 import * as iam from "@aws-cdk/aws-iam";
+import { ApiGatewayToLambda } from "@aws-solutions-constructs/aws-apigateway-lambda";
 
 const createLambdaFunctionGenerator = (scope: cdk.Construct) => {
   return (name: string) => {
@@ -108,9 +109,31 @@ export class AwsCdkStepFunctionsPlaygroundStack extends cdk.Stack {
           .otherwise(finalStatus)
       );
 
-    new sfn.StateMachine(this, "StateMachine", {
+    const stateMachine = new sfn.StateMachine(this, "StateMachine", {
       definition,
       timeout: cdk.Duration.minutes(30),
     });
+
+    const apiGatewayToLambda = new ApiGatewayToLambda(
+      this,
+      "ApiGatewayToLambdaToSfnStartExecution",
+      {
+        lambdaFunctionProps: {
+          runtime: lambda.Runtime.NODEJS_12_X,
+          handler: "index.sfnStartExecution",
+          code: lambda.Code.fromAsset(`${__dirname}/lambda`),
+          environment: {
+            STATE_MACHINE_ARN: stateMachine.stateMachineArn,
+          },
+        },
+      }
+    );
+
+    apiGatewayToLambda.lambdaFunction.role?.addToPrincipalPolicy(
+      new iam.PolicyStatement({
+        resources: [stateMachine.stateMachineArn],
+        actions: ["states:StartExecution"],
+      })
+    );
   }
 }

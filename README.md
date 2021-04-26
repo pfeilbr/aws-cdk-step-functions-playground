@@ -1,5 +1,8 @@
 # aws-cdk-step-functions-playground
 
+```sh
+awscurl --service execute-api -X POST https://7t0zeiul1l.execute-api.us-east-1.amazonaws.com/prod/ -d '{"foo": "bar"}'
+```
 
 ---
 # Welcome to your CDK TypeScript project!
