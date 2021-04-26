@@ -1,3 +1,7 @@
+# aws-cdk-step-functions-playground
+
+
+---
 # Welcome to your CDK TypeScript project!
 
 This is a blank project for TypeScript development with CDK.
