@@ -1,5 +1,9 @@
 # aws-cdk-step-functions-playground
 
+CDK app
+
+`api gateway -> lambda -> step fn -> lambda (cfn create stack) ->  wait -> lambda (create stack status) -> choice -> end`
+
 ```sh
 awscurl --service execute-api -X POST https://7t0zeiul1l.execute-api.us-east-1.amazonaws.com/prod/ -d '{"foo": "bar"}'
 ```
