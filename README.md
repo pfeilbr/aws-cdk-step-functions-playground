@@ -1,10 +1,44 @@
 # aws-cdk-step-functions-playground
 
-CDK app
+CDK app providing API Gateway endpoint to provision a CloudFormation stack.  Endpoint is backed by step function that
+initiates the `create-stack` and polls (`describe-stack`) on an interval for completion.
 
-`api gateway -> lambda -> step fn -> lambda (cfn create stack) ->  wait -> lambda (create stack status) -> choice -> end`
+This can be used as a backend to provision a [AWS CloudFormation Custom Resource Type](https://brianpfeil.com/post/aws-cloudformation-custom-resource-type/) that itself is backed by a set of AWS services.
+
+## Architecture
+
+<img src="images/arch.svg" alt="" width="" />
+
+<!--
+# graphviz source
+digraph G {
+    rankdir=LR;
+    "api gateway" -> lambda
+    lambda -> "step fn"
+    "step fn" -> "lambda\n(cfn create stack)"
+    "lambda\n(cfn create stack)" -> wait
+    wait -> "lambda\n(create stack status)"
+    "lambda\n(create stack status)" -> "choice (stack created?)"
+    "choice (stack created?)"->wait
+    "choice (stack created?)"->end
+}
+-->
+
+## Dependencies
+
+* [CDK](https://aws.amazon.com/cdk/)
+* [awscurl](https://github.com/okigan/awscurl)
+
+## Demo
 
 ```sh
+# install deps
+npm install
+
+# deploy
+cdk deploy  --force --require-approval never
+
+# test with IAM auth (aws sigv4 request)
 awscurl --service execute-api -X POST https://7t0zeiul1l.execute-api.us-east-1.amazonaws.com/prod/ -d '{"foo": "bar"}'
 ```
 
