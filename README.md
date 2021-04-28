@@ -7,7 +7,7 @@ This can be used as a backend to provision a [AWS CloudFormation Custom Resource
 
 ## Architecture
 
-![](images/arch.svg)
+<img src="https://www.evernote.com/l/AAExnb6WCDRDW7Vj2StG-7JI4d51djCzvPoB/image.png" alt="" width="" />
 
 <!--
 # graphviz source
