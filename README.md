@@ -5,6 +5,8 @@ initiates the `create-stack` and polls (`describe-stack`) on an interval for com
 
 This can be used as a backend to provision a [AWS CloudFormation Custom Resource Type](https://brianpfeil.com/post/aws-cloudformation-custom-resource-type/) that itself is backed by a set of AWS services.
 
+see CDK stack components at [`lib/aws-cdk-step-functions-playground-stack.ts`](lib/aws-cdk-step-functions-playground-stack.ts)
+
 ## Architecture
 
 <img src="https://www.evernote.com/l/AAExnb6WCDRDW7Vj2StG-7JI4d51djCzvPoB/image.png" alt="" width="100%" />
@@ -23,6 +25,10 @@ digraph G {
     "choice (stack created?)"->end
 }
 -->
+
+---
+
+
 
 ## Dependencies
 
