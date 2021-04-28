@@ -7,7 +7,7 @@ This can be used as a backend to provision a [AWS CloudFormation Custom Resource
 
 ## Architecture
 
-<img src="images/arch.svg" alt="" width="" />
+![](images/arch.svg)
 
 <!--
 # graphviz source
